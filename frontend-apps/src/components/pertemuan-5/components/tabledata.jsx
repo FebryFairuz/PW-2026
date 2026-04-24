@@ -11,7 +11,7 @@ export default function Tabledata() {
     <Cards>
       <Cards.Header>
         <div className="w-50">
-          <SearchInput/>
+          <SearchInput />
         </div>
         <div>
           <span className="fw-bold">Total 0</span>
@@ -62,6 +62,22 @@ export default function Tabledata() {
                 </td>
                 <td>
                   <span className="badge bg-secondary">Yes</span>
+                </td>
+                <td>
+                  <Button
+                    outline
+                    className="btn-sm me-2 btn-warning"
+                    title="Edit"
+                  >
+                    <i className="bi bi-pencil"></i>
+                  </Button>
+                  <Button
+                    outline
+                    className="btn-sm me-2 btn-danger"
+                    title="Delete"
+                  >
+                    <i className="bi bi-trash"></i>
+                  </Button>
                 </td>
               </tr>
             </tbody>
