@@ -1,0 +1,1 @@
+export { default } from '@/components/pertemuan-2/index'
