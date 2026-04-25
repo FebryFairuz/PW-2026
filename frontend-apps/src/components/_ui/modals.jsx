@@ -117,7 +117,7 @@ const ModalResponse = ({ title, message, variant = "success" }) => {
       {message && <p className="mb-10">{message}</p>}
       <div className="my-5">
         <Button
-          className="btn-lg fw-bolder"
+          className="btn-lg fw-bolder btn-primary"
           onClick={() => openModal({ open: false })}
         >
           Ok, got it!

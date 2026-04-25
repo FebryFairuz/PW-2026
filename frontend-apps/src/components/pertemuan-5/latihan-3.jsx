@@ -9,6 +9,25 @@ import Form from "./components/form";
 import { openModal } from "@/components/_ui/modals";
 
 export default function Latihan3() {
+  const [books, setBooks] = useState(ListBooks);
+
+  const handleaddBook = (newBook) => {
+    console.log("New book added:", newBook);
+    setBooks((prevBooks) => [...prevBooks, newBook]);
+  }
+
+  const handleUpdateBook = (updatedBook) => {
+    setBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        book.id === updatedBook.id ? updatedBook : book,
+      ),
+    );
+  };
+
+  const handleDeleteBook = (bookId) => {
+    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+  };
+
   return (
     <Layout>
       <div className="d-flex align-items-center justify-content-between mb-3">
@@ -20,7 +39,7 @@ export default function Latihan3() {
           className="d-flex align-items-center gap-2 btn-primary btn-sm px-3"
           onClick={() =>
             openModal({
-              message: <Form />,
+              message: <Form onSubmit={handleaddBook} />,
               size: "xl",
             })
           }
@@ -30,7 +49,7 @@ export default function Latihan3() {
         </Button>
       </div>
       <div className="d-none d-lg-block">
-        <Tabledata />
+        <Tabledata books={books} onUpdate={handleUpdateBook} onDelete={handleDeleteBook} />
       </div>
     </Layout>
   );

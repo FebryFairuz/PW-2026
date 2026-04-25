@@ -1,17 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Cards } from "@/components/_ui/cards";
 import { Button } from "@/components/_ui/atoms/buttons";
 import { SearchInput } from "@/components/_ui/datatables";
 import { NoRecordFound } from "@/components/_ui/datatables";
 import { ModalResponse, openModal } from "@/components/_ui/modals";
 import { Spinners } from "@/components/_ui/loading";
+import Form from "./form";
 
-export default function Tabledata() {
+export default function Tabledata({ books, onUpdate, onDelete }) {
+  const [search, setSearch] = useState("");
+  const resultBooks = useMemo(() => {
+    let data = books;
+    if (search) {
+      data = data.filter((book) => {
+        return Object.keys(book).some((key) => {
+          try {
+            const value = book[key];
+            return (
+              value != null &&
+              String(value).toLowerCase().includes(search.toLowerCase())
+            );
+          } catch (error) {
+            return false;
+          }
+        });
+      });
+    }
+    return data;
+  });
   return (
     <Cards>
       <Cards.Header>
         <div className="w-50">
-          <SearchInput />
+          <SearchInput
+            keyword={search}
+            onAction={(event) => setSearch(event.target.value)}
+          />
         </div>
         <div>
           <span className="fw-bold">Total 0</span>
@@ -33,53 +57,75 @@ export default function Tabledata() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>
-                  <div className="d-flex align-items-center">
-                    <div
-                      className="rounded p-3 bg-secondary"
-                      style={{ width: 50, height: 50 }}
-                    ></div>
-                    <div className="ms-1">
-                      <span className="fw-bold d-block">title</span>
-                      <span className="ms-1 fs-6">sinopsis</span>
+              {resultBooks.map((book, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <div className="d-flex align-items-center">
+                      <img
+                        src={`/assets/books/${book?.images || `/image_icon.png`}`}
+                        alt={book?.title || ""}
+                        style={{ width: 100, height: 100 }}
+                      />
+                      <div className="ms-1">
+                        <span className="fw-bold d-block">
+                          {book?.title || ""}
+                        </span>
+                        <span className="ms-1 fs-6">
+                          {book?.sinopsis || ""}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>author name</td>
-                <td>
-                  <div className="d-flex">
-                    <div className="me-3">
-                      <i className="bi bi-star-fill text-warning"></i>
-                      <span className="text-dark ms-1">{0}</span>
+                  </td>
+                  <td>{book?.author || ""}</td>
+                  <td>
+                    <div className="d-flex">
+                      <div className="me-3">
+                        <i className="bi bi-star-fill text-warning"></i>
+                        <span className="text-dark ms-1">
+                          {book?.rating || 0}
+                        </span>
+                      </div>
+                      <div className="me-3">
+                        <i className="bi bi-eye text-info"></i>
+                        <span className="text-dark ms-1">
+                          {book?.views || 0}
+                        </span>
+                      </div>
                     </div>
-                    <div className="me-3">
-                      <i className="bi bi-eye text-info"></i>
-                      <span className="text-dark ms-1">{0}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <span className="badge bg-secondary">Yes</span>
-                </td>
-                <td>
-                  <Button
-                    outline
-                    className="btn-sm me-2 btn-warning"
-                    title="Edit"
-                  >
-                    <i className="bi bi-pencil"></i>
-                  </Button>
-                  <Button
-                    outline
-                    className="btn-sm me-2 btn-danger"
-                    title="Delete"
-                  >
-                    <i className="bi bi-trash"></i>
-                  </Button>
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    <span className="badge bg-secondary">
+                      {book?.is_free ? "Yes" : "No"}
+                    </span>
+                  </td>
+                  <td>
+                    <Button
+                      outline
+                      className="btn-sm me-2 btn-warning"
+                      title="Edit"
+                      onClick={() =>
+                        openModal({
+                          message: (
+                            <Form book_id={book?.id} onSubmit={onUpdate} />
+                          ),
+                          size: "xl",
+                        })
+                      }
+                    >
+                      <i className="bi bi-pencil"></i>
+                    </Button>
+                    <Button
+                      outline
+                      className="btn-sm me-2 btn-danger"
+                      title="Delete"
+                      onClick={() => onDelete(book?.id)}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
