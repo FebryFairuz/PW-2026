@@ -7,7 +7,7 @@ import { ModalResponse, openModal } from "@/components/_ui/modals";
 import { Spinners } from "@/components/_ui/loading";
 import Form from "./form";
 
-export default function Tabledata({ books, onUpdate, onDelete }) {
+export default function Tabledata({ books}) {
   const [search, setSearch] = useState("");
   const resultBooks = useMemo(() => {
     let data = books;
@@ -65,14 +65,14 @@ export default function Tabledata({ books, onUpdate, onDelete }) {
                       <img
                         src={`/assets/books/${book?.images || `/image_icon.png`}`}
                         alt={book?.title || ""}
-                        style={{ width: 100, height: 100 }}
+                        style={{ width: 50, height: 50 }}
                       />
                       <div className="ms-1">
                         <span className="fw-bold d-block">
                           {book?.title || ""}
                         </span>
                         <span className="ms-1 fs-6">
-                          {book?.sinopsis || ""}
+                          {book?.sinopsis.slice(0, 30)}...
                         </span>
                       </div>
                     </div>
@@ -104,14 +104,6 @@ export default function Tabledata({ books, onUpdate, onDelete }) {
                       outline
                       className="btn-sm me-2 btn-warning"
                       title="Edit"
-                      onClick={() =>
-                        openModal({
-                          message: (
-                            <Form book_id={book?.id} onSubmit={onUpdate} />
-                          ),
-                          size: "xl",
-                        })
-                      }
                     >
                       <i className="bi bi-pencil"></i>
                     </Button>
@@ -119,7 +111,6 @@ export default function Tabledata({ books, onUpdate, onDelete }) {
                       outline
                       className="btn-sm me-2 btn-danger"
                       title="Delete"
-                      onClick={() => onDelete(book?.id)}
                     >
                       <i className="bi bi-trash"></i>
                     </Button>

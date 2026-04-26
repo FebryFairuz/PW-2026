@@ -16,18 +16,6 @@ export default function Latihan3() {
     setBooks((prevBooks) => [...prevBooks, newBook]);
   }
 
-  const handleUpdateBook = (updatedBook) => {
-    setBooks((prevBooks) =>
-      prevBooks.map((book) =>
-        book.id === updatedBook.id ? updatedBook : book,
-      ),
-    );
-  };
-
-  const handleDeleteBook = (bookId) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-  };
-
   return (
     <Layout>
       <div className="d-flex align-items-center justify-content-between mb-3">
@@ -49,7 +37,7 @@ export default function Latihan3() {
         </Button>
       </div>
       <div className="d-none d-lg-block">
-        <Tabledata books={books} onUpdate={handleUpdateBook} onDelete={handleDeleteBook} />
+        <Tabledata books={books} />
       </div>
     </Layout>
   );
