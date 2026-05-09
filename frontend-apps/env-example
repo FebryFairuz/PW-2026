@@ -1,0 +1,5 @@
+API_PORT=3000
+NODE_ENV=production
+REACT_APP_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_BACKEND_URI=http://localhost:3001
+JWT_SECRET=1bik_b3st
