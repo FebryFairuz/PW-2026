@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Layout from "./layout";
 import { Button } from "../_ui/atoms/buttons";
 
 export default function Latihan1() {
   const [count, setCount] = useState(0);
   return (
-    <Layout>
       <div className="border p-3 w-50 m-auto text-center bg-light">
         <h3>
           Hit me <span className="text-info">{count}</span>
@@ -36,6 +34,5 @@ export default function Latihan1() {
           </Button>
         </div>
       </div>
-    </Layout>
   );
 }

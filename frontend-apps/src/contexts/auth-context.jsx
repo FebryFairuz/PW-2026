@@ -1,0 +1,84 @@
+"use client";
+
+import { createContext, useContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+const AuthContext = createContext({});
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    const checkAuth = () => {
+        try {
+            const token = localStorage.getItem("accessToken");
+            const userData = localStorage.getItem("user");
+            const expiresIn = localStorage.getItem("expiresIn");
+
+            if (token && userData && expiresIn) {
+                // Cek apakah token sudah expired
+                const currentTime = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
+                const expirationTime = parseInt(expiresIn);
+
+                if (currentTime >= expirationTime) {
+                    // Token sudah expired
+                    console.log("Token has expired, logging out...");
+                    logout();
+                    return;
+                }
+
+                // Token masih valid
+                setUser(JSON.parse(userData));
+            } else {
+                setUser(null);
+            }
+        } catch (error) {
+            console.error("Error checking auth:", error);
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const login = (userData, token, expiresIn) => {
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("expiresIn", expiresIn);
+        localStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData);
+        
+        // Return promise untuk memastikan state sudah terupdate
+        return Promise.resolve();
+    };
+
+    const logout = () => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("expiresIn");
+        localStorage.removeItem("user");
+        setUser(null);
+        router.push("/auth");
+    };
+
+    // Helper function untuk cek apakah user sudah login
+    const isAuthenticated = () => {
+        return user !== null;
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, isAuthenticated }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};

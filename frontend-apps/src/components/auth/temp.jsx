@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Text } from "../../_ui/atoms/texts";
+import { Heading, Text } from "@/components/_ui/atoms/texts";
 
 export default function AuthTemp({ children, title, description }) {
   return (

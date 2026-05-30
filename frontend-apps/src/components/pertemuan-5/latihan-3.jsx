@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Layout from "./layout";
 import { ListBooks } from "@/const/bookList";
 import { Button } from "@/components/_ui/atoms/buttons";
 import Tabledata from "./components/tabledata";
@@ -14,10 +13,10 @@ export default function Latihan3() {
   const handleaddBook = (newBook) => {
     console.log("New book added:", newBook);
     setBooks((prevBooks) => [...prevBooks, newBook]);
-  }
+  };
 
   return (
-    <Layout>
+    <>
       <div className="d-flex align-items-center justify-content-between mb-3">
         <h3>
           <i className="bi bi-book"></i>
@@ -39,6 +38,6 @@ export default function Latihan3() {
       <div className="d-none d-lg-block">
         <Tabledata books={books} />
       </div>
-    </Layout>
+    </>
   );
 }

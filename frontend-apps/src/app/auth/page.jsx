@@ -1,2 +1,2 @@
-export { default } from '@/components/pertemuan-3/auth/loginForm'
+export { default } from '@/components/auth/loginForm'
 

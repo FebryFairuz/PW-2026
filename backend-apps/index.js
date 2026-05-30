@@ -7,6 +7,7 @@ const app = express();
 
 // IMPORT ROUTES
 const userRoutes = require("./routes/userRoutes");
+const bookRoutes = require("./routes/bookRoutes");
 
 // Middleware
 app.use(cors({
@@ -16,6 +17,8 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Test database connection
@@ -39,6 +42,7 @@ app.get("/", (req, res) => {
 
 // API Routes
 app.use("/api/users", userRoutes);
+app.use("/api/books", bookRoutes);
 
 app.get("/api/info", (req, res) => {
     res.json({

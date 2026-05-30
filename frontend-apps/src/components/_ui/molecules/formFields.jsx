@@ -95,6 +95,7 @@ const PasswordField = ({
   value,
   onChange,
   showPassword,
+  onPasswordToggle,
   ...props
 }) => {
   return (
@@ -120,6 +121,7 @@ const PasswordField = ({
           className="btn-link position-absolute end-0 top-50 translate-middle-y text-decoration-none"
           style={{ zIndex: 10 }}
           tabIndex="-1"
+          onClick={onPasswordToggle}
         >
           <Icon
             name={showPassword ? "eye-slash" : "eye"}

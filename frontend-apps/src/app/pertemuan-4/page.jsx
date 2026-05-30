@@ -1,1 +1,1 @@
-export { default } from '@/components/pertemuan-4/latihan-1'
+export { default } from '@/components/pertemuan-4/index'
