@@ -1,8 +1,13 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Cards } from "@/components/_ui/cards";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function Header() {
+  const { user, logout } = useAuth();
+  
   return (
     <Cards>
       <Cards.Body className={`bg-primary rounded bg-gradient`}>
@@ -24,6 +29,23 @@ export default function Header() {
               </h3>
             </div>
           </div>
+          {user && (
+            <div className="d-flex align-items-center gap-2">
+              <div className="d-flex align-items-center bg-light bg-opacity-50 rounded-pill p-1 px-3">
+                <span className="me-2">👋</span>
+                <span>{user?.username}</span>
+              </div>
+              <div className="w-100">
+                <button
+                  className="w-100 btn btn-sm btn-light rounded-pill px-3"
+                  onClick={logout}
+                >
+                  <span className="me-2">Logout</span>
+                  <i className="bi bi-box-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </Cards.Body>
     </Cards>
