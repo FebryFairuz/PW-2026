@@ -11,8 +11,14 @@ const bookRoutes = require("./routes/bookRoutes");
 
 // Middleware
 app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true
+    origin: [
+        "http://localhost:3000",           // Next.js development
+        "http://192.168.1.9:8081",         // Expo mobile app
+        "exp://192.168.1.9:8081",          // Expo protocol
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
