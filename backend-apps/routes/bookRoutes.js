@@ -13,6 +13,9 @@ router.use(verifyToken);
 // Get statistics
 router.get('/statistics', bookController.getStatistics);
 
+// Get explorer book cluster
+router.get('/explorers', bookController.getExploringBooks);
+
 // Get all books
 router.get('/', bookController.getAllBooks);
 
@@ -30,5 +33,6 @@ router.patch('/:id', upload.single('coverImage'), bookController.patchBook);
 
 // Delete book
 router.delete('/:id', bookController.deleteBook);
+
 
 module.exports = router;

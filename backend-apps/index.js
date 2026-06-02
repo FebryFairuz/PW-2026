@@ -14,7 +14,9 @@ app.use(cors({
     origin: [
         "http://localhost:3000",           // Next.js development
         "http://192.168.1.9:8081",         // Expo mobile app
-        "exp://192.168.1.9:8081",          // Expo protocol
+        "exp://192.168.1.9:8081",          // Expo protocol,
+        "http://10.20.20.201:8081",         
+        "exp://10.20.20.201"
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
