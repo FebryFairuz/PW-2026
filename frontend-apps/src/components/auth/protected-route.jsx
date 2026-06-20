@@ -13,7 +13,6 @@ export default function ProtectedRoute({ children }) {
 
     useEffect(() => {
         if (!loading && !user) {
-            // Tambahkan delay kecil sebelum redirect
             const timer = setTimeout(() => {
                 setShouldRedirect(true);
             }, 100);

@@ -10,7 +10,7 @@ export default function TempLayout({ children }) {
   const current_path = pathname.split("/").filter((item) => item);
 
   return (
-    <div className="container mt-3">
+    <div className="container-fluid container-lg mt-3">
       <Header />
       <div style={{ marginTop: "-10px",position:'inherit' }}>
         {current_path.length > 0 && (

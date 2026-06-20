@@ -1,5 +1,5 @@
 import React from 'react'
-import { RequestAPI } from '@/hooks/RequestAPI'
+import { RequestAPI } from '@/hooks/request-api'
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URI;
 // const TOKEN = localStorage.getItem('accessToken');

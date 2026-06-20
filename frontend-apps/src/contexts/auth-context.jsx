@@ -21,18 +21,15 @@ export const AuthProvider = ({ children }) => {
             const expiresIn = localStorage.getItem("expiresIn");
 
             if (token && userData && expiresIn) {
-                // Cek apakah token sudah expired
-                const currentTime = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
+                const currentTime = Math.floor(Date.now() / 1000);
                 const expirationTime = parseInt(expiresIn);
 
                 if (currentTime >= expirationTime) {
-                    // Token sudah expired
                     console.log("Token has expired, logging out...");
                     logout();
                     return;
                 }
 
-                // Token masih valid
                 setUser(JSON.parse(userData));
             } else {
                 setUser(null);
@@ -51,7 +48,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
         
-        // Return promise untuk memastikan state sudah terupdate
         return Promise.resolve();
     };
 
@@ -63,7 +59,6 @@ export const AuthProvider = ({ children }) => {
         router.push("/auth");
     };
 
-    // Helper function untuk cek apakah user sudah login
     const isAuthenticated = () => {
         return user !== null;
     };

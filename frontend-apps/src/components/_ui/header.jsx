@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <Cards>
       <Cards.Body className={`bg-primary rounded bg-gradient`}>
-        <div className="d-flex align-items-center justify-content-between">
+        <div className="d-lg-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-3">
             <Image
               src="/assets/images/LOGO_IBIK.png"
